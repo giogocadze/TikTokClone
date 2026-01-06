@@ -6,18 +6,17 @@
 //
 
 import SwiftUI
+import AVKit
 
 struct FeedCell: View {
-    let post : Int
+    let post : Post
     var body: some View {
-        ZStack{
-            Rectangle()
-                .fill(.pink)
-                .containerRelativeFrame([.horizontal, .vertical])
-                .overlay {
-                    Text("Post \(post)")
-                        .foregroundStyle(.white)
-                }
+        ZStack {
+            if let url = URL(string: post.videoUrl) {
+                VideoPlayer(player: AVPlayer(url: url))
+                    .containerRelativeFrame([.horizontal, .vertical])
+            }
+
             VStack {
                 Spacer()
                 HStack (alignment : .bottom ) {
@@ -94,5 +93,10 @@ struct FeedCell: View {
 }
 
 #Preview {
-    FeedCell(post : 2)
+    FeedCell(
+        post: Post(
+            id: UUID().uuidString,
+            videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+        )
+    )
 }
