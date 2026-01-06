@@ -7,21 +7,30 @@
 
 import SwiftUI
 
+
 struct FeedView: View {
-    @StateObject var viewModel =  FeedViewModel()
+    @StateObject var viewModel = FeedViewModel()
+    @State private var activePostId: String?
+
     var body: some View {
-            ScrollView {
-            LazyVStack (spacing : 0) {
+        ScrollView {
+            LazyVStack(spacing: 0) {
                 ForEach(viewModel.posts) { post in
-                    FeedCell(post : post)
+                    FeedCell(
+                        post: post,
+                        activePostId: $activePostId
+                    )
+                    .id(post.id)
                 }
             }
             .scrollTargetLayout()
         }
         .scrollTargetBehavior(.paging)
+        .scrollPosition(id: $activePostId)   
         .ignoresSafeArea()
     }
 }
+
 
 #Preview {
     FeedView()
