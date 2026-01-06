@@ -12,9 +12,16 @@ struct CurrentUserProfile: View {
         NavigationStack {
             ScrollView {
                 VStack {
+                    ProfileHeaderView()
+                    
+                    
+                    
                     
                 }
+                .padding(.top)
             }
+            .navigationTitle("Profile")
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
