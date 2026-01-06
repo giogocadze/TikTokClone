@@ -6,10 +6,6 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		C7F1218B2F0D2F60006F8DC5 /* .gitignore in Sources */ = {isa = PBXBuildFile; fileRef = C7F1218A2F0D2F58006F8DC5 /* .gitignore */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXContainerItemProxy section */
 		C7F1213C2F0BD0E6006F8DC5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -242,7 +238,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C7F1218B2F0D2F60006F8DC5 /* .gitignore in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
