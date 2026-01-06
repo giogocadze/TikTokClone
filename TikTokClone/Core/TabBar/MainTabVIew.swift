@@ -46,7 +46,7 @@ struct MainTabVIew: View {
                 }
                 .onAppear{selectedTab = 3}
                 .tag(3)
-            Text("Profile")
+            CurrentUserProfile()
                 .tabItem{
                     VStack {
                         Image(systemName : selectedTab == 4 ? "person.fill" : "person")
