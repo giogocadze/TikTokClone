@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		C7F1218B2F0D2F60006F8DC5 /* .gitignore in Sources */ = {isa = PBXBuildFile; fileRef = C7F1218A2F0D2F58006F8DC5 /* .gitignore */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		C7F1213C2F0BD0E6006F8DC5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,7 @@
 		C7F1212E2F0BD0E4006F8DC5 /* TikTokClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TikTokClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7F1213B2F0BD0E6006F8DC5 /* TikTokCloneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TikTokCloneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7F121452F0BD0E6006F8DC5 /* TikTokCloneUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TikTokCloneUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C7F1218A2F0D2F58006F8DC5 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -75,6 +80,7 @@
 		C7F121252F0BD0E4006F8DC5 = {
 			isa = PBXGroup;
 			children = (
+				C7F1218A2F0D2F58006F8DC5 /* .gitignore */,
 				C7F121302F0BD0E4006F8DC5 /* TikTokClone */,
 				C7F1213E2F0BD0E6006F8DC5 /* TikTokCloneTests */,
 				C7F121482F0BD0E6006F8DC5 /* TikTokCloneUITests */,
@@ -236,6 +242,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7F1218B2F0D2F60006F8DC5 /* .gitignore in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
