@@ -13,17 +13,24 @@ struct SignUpView: View {
     @State private var email = ""
     @State private var password = ""
     @State private var confirmPassword = ""
+    
+    
+    private var isEmailValid: Bool {
+        let emailRegex = #"^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"#
+        return NSPredicate(format: "SELF MATCHES %@", emailRegex)
+            .evaluate(with: email)
+    }
 
-    // MARK: - Validation
+
     private var passwordsMatch: Bool {
         !password.isEmpty &&
         password == confirmPassword
     }
 
     private var isFormValid: Bool {
-        !email.isEmpty &&
+        isEmailValid &&
         password.count >= 6 &&
-        passwordsMatch
+        password == confirmPassword
     }
 
     var body: some View {
@@ -43,6 +50,15 @@ struct SignUpView: View {
                     .background(Color(.systemGray6))
                     .cornerRadius(8)
 
+                if !email.isEmpty && !isEmailValid {
+                    Text("Please enter a valid email address")
+                        .font(.caption)
+                        .foregroundColor(.red)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+
+                
+                
                 PasswordFieldView(
                     title: "Password",
                     text: $password
@@ -86,6 +102,7 @@ struct SignUpView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
 }
+
 
 #Preview {
     SignUpView()
