@@ -14,61 +14,78 @@ struct LoginView: View {
     @State private var password = ""
     @State private var isPasswordVisible = false
 
-
     var body: some View {
-        VStack(spacing: 24) {
-            Spacer()
+        NavigationStack {
+            VStack(spacing: 24) {
+                Spacer()
 
-            Text("TikTok")
-                .font(.largeTitle)
-                .fontWeight(.bold)
+                Text("TikTok")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
 
-            VStack(spacing: 16) {
-                TextField("Email", text: $email)
-                    .textInputAutocapitalization(.never)
-                    .keyboardType(.emailAddress)
+                VStack(spacing: 16) {
+                    TextField("Email", text: $email)
+                        .textInputAutocapitalization(.never)
+                        .keyboardType(.emailAddress)
+                        .padding()
+                        .background(Color(.systemGray6))
+                        .cornerRadius(8)
+
+                    HStack {
+                        Group {
+                            if isPasswordVisible {
+                                TextField("Password", text: $password)
+                            } else {
+                                SecureField("Password", text: $password)
+                            }
+                        }
+                        .textInputAutocapitalization(.never)
+
+                        Button {
+                            isPasswordVisible.toggle()
+                        } label: {
+                            Image(systemName: isPasswordVisible ? "eye.slash" : "eye")
+                                .foregroundStyle(.gray)
+                        }
+                    }
                     .padding()
                     .background(Color(.systemGray6))
                     .cornerRadius(8)
+                }
 
-                HStack {
-                    Group {
-                        if isPasswordVisible {
-                            TextField("Password", text: $password)
-                        } else {
-                            SecureField("Password", text: $password)
-                        }
-                    }
-                    .textInputAutocapitalization(.never)
+                Button {
+                    auth.signIn()
+                } label: {
+                    Text("Log In")
+                        .frame(maxWidth: .infinity, maxHeight: 50)
+                        .background(.red)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
 
-                    Button {
-                        isPasswordVisible.toggle()
+                // 👇 Sign up text
+                HStack(spacing: 4) {
+                    Text("Don't have an account?")
+                        .foregroundStyle(.gray)
+
+                    NavigationLink {
+                        SignUpView()
                     } label: {
-                        Image(systemName: isPasswordVisible ? "eye" : "eye.slash")
-                            .foregroundStyle(.gray)
+                        Text("Sign up")
+                            .fontWeight(.semibold)
                     }
                 }
-                .padding()
-                .background(Color(.systemGray6))
-                .cornerRadius(8)
+                .font(.subheadline)
 
+                Spacer()
             }
-
-            Button {
-                auth.signIn()
-            } label: {
-                Text("Log In")
-                    .frame(maxWidth: .infinity, maxHeight: 50)
-                    .background(.red)
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
-            }
-
-            Spacer()
+            .padding()
         }
-        .padding()
     }
 }
+
+
+
 
 #Preview {
     LoginView()
