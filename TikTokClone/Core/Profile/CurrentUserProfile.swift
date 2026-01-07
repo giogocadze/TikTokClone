@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct CurrentUserProfile: View {
+    @EnvironmentObject var auth: AuthManager
+    @State private var showSignOutAlert = false
+
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -22,16 +25,28 @@ struct CurrentUserProfile: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Sign Out") {
-                        
+                        showSignOutAlert = true
                     }
                     .font(.subheadline)
                     .foregroundStyle(.black)
                 }
             }
+            .alert("Sign Out", isPresented: $showSignOutAlert) {
+                Button("Cancel", role: .cancel) {}
+
+                Button("Sign Out", role: .destructive) {
+                    auth.signOut()
+                }
+            } message: {
+                Text("Are you sure you want to sign out?")
+            }
+
         }
     }
 }
 
 #Preview {
     CurrentUserProfile()
+        .environmentObject(AuthManager())
 }
+

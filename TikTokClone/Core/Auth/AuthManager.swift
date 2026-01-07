@@ -8,7 +8,7 @@
 import SwiftUI
 import Combine
 final class AuthManager: ObservableObject {
-    @Published var isLoggedIn: Bool = false
+    @AppStorage("isLoggedIn") var isLoggedIn = false
 
     func signIn() {
         isLoggedIn = true

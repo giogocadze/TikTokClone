@@ -84,4 +84,5 @@ struct MainTabVIew: View {
 
 #Preview {
     MainTabVIew()
+        .environmentObject(AuthManager())
 }
