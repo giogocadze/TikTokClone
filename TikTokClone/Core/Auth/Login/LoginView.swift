@@ -13,6 +13,10 @@ struct LoginView: View {
     @State private var email = ""
     @State private var password = ""
 
+    private var isFormValid: Bool {
+        !email.isEmpty && !password.isEmpty
+    }
+
     var body: some View {
         NavigationStack {
             VStack(spacing: 24) {
@@ -36,13 +40,14 @@ struct LoginView: View {
                     )
                 }
 
-          
                 LoadingButton(
                     title: "Log In",
                     isLoading: auth.isLoading
                 ) {
                     auth.signIn()
                 }
+                .disabled(!isFormValid)
+                .opacity(isFormValid ? 1 : 0.6)
 
                 HStack(spacing: 4) {
                     Text("Don't have an account?")

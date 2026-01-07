@@ -14,6 +14,18 @@ struct SignUpView: View {
     @State private var password = ""
     @State private var confirmPassword = ""
 
+    // MARK: - Validation
+    private var passwordsMatch: Bool {
+        !password.isEmpty &&
+        password == confirmPassword
+    }
+
+    private var isFormValid: Bool {
+        !email.isEmpty &&
+        password.count >= 6 &&
+        passwordsMatch
+    }
+
     var body: some View {
         VStack(spacing: 24) {
             Spacer()
@@ -40,14 +52,32 @@ struct SignUpView: View {
                     title: "Confirm Password",
                     text: $confirmPassword
                 )
+
+        
+                if !passwordsMatch && !confirmPassword.isEmpty {
+                    Text("Passwords do not match")
+                        .font(.caption)
+                        .foregroundColor(.red)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+
+                if password.count > 0 && password.count < 6 {
+                    Text("Password must be at least 6 characters")
+                        .font(.caption)
+                        .foregroundColor(.red)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
             }
 
+        
             LoadingButton(
                 title: "Sign Up",
                 isLoading: auth.isLoading
             ) {
-                auth.signIn() 
+                auth.signIn() // placeholder
             }
+            .disabled(!isFormValid)
+            .opacity(isFormValid ? 1 : 0.6)
 
             Spacer()
         }
@@ -61,4 +91,5 @@ struct SignUpView: View {
     SignUpView()
         .environmentObject(AuthManager())
 }
+
 
