@@ -22,32 +22,29 @@ struct ProfileHeaderView: View {
                     .fontWeight(.semibold)
             }
 
-            // Stats view
             HStack(spacing: 16) {
-                UserStatView(value:  5, title: "Following")
+                UserStatView(value: 5, title: "Following")
                 UserStatView(value: 1, title: "Followers")
                 UserStatView(value: 10, title: "Likes")
             }
-            
-            //action button
-            
+
             Button {
-                
-            } label : {
+                // edit profile
+            } label: {
                 Text("Edit Profile")
                     .font(.subheadline)
                     .fontWeight(.semibold)
-                    .frame(width :360,  height : 32)
+                    .frame(width: 360, height: 32)
                     .foregroundStyle(.black)
                     .background(Color(.systemGray5))
-                    .clipShape(RoundedRectangle(cornerRadius : 6))
-                
-                
+                    .clipShape(RoundedRectangle(cornerRadius: 6))
             }
+
             Divider()
         }
     }
 }
+
 
 
 

@@ -13,15 +13,21 @@ struct CurrentUserProfile: View {
             ScrollView {
                 VStack {
                     ProfileHeaderView()
-                    
                     PostGridView()
-                    
-
                 }
                 .padding(.top)
             }
             .navigationTitle("Profile")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Sign Out") {
+                        
+                    }
+                    .font(.subheadline)
+                    .foregroundStyle(.black)
+                }
+            }
         }
     }
 }
