@@ -9,57 +9,54 @@ import SwiftUI
 
 struct MainTabVIew: View {
     @State private var selectedTab = 0
+
     var body: some View {
-        TabView  (selection : $selectedTab){
-            FeedView()
-                .tabItem{
+        TabView(selection: $selectedTab) {
+
+            FeedView(isActive: selectedTab == 0)
+                .tabItem {
                     VStack {
-                        Image(systemName : selectedTab == 0 ? "house.fill" : "house")
-                            .environment(\.symbolVariants, selectedTab == 0 ? .fill : .none)
+                        Image(systemName: selectedTab == 0 ? "house.fill" : "house")
                         Text("Home")
                     }
                 }
-                .onAppear{selectedTab = 0}
                 .tag(0)
-            
+
             ExploreView()
-                .tabItem{
+                .tabItem {
                     VStack {
-                        Image(systemName : selectedTab == 1 ? "person.2.fill" : "person.2")
-                            .environment(\.symbolVariants, selectedTab == 1 ? .fill : .none)
+                        Image(systemName: selectedTab == 1 ? "person.2.fill" : "person.2")
                         Text("Friends")
                     }
                 }
-                .onAppear{selectedTab = 1}
                 .tag(1)
+
             Text("UploadPost")
-                .tabItem{Image(systemName: "plus")}
+                .tabItem { Image(systemName: "plus") }
                 .tag(2)
-            
+
             NotificationsVIew()
-                .tabItem{
+                .tabItem {
                     VStack {
-                        Image(systemName : selectedTab == 3 ? "heart.fill" : "heart")
-                            .environment(\.symbolVariants, selectedTab == 3 ? .fill : .none)
+                        Image(systemName: selectedTab == 3 ? "heart.fill" : "heart")
                         Text("Inbox")
                     }
                 }
-                .onAppear{selectedTab = 3}
                 .tag(3)
+
             CurrentUserProfile()
-                .tabItem{
+                .tabItem {
                     VStack {
-                        Image(systemName : selectedTab == 4 ? "person.fill" : "person")
-                            .environment(\.symbolVariants, selectedTab == 4 ? .fill : .none)
+                        Image(systemName: selectedTab == 4 ? "person.fill" : "person")
                         Text("Profile")
                     }
                 }
-                .onAppear{selectedTab = 4}
                 .tag(4)
         }
         .tint(.black)
     }
 }
+
 
 #Preview {
     MainTabVIew()

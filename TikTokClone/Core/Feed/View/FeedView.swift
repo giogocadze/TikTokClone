@@ -7,8 +7,9 @@
 
 import SwiftUI
 
-
 struct FeedView: View {
+    let isActive: Bool
+
     @StateObject var viewModel = FeedViewModel()
     @State private var activePostId: String?
 
@@ -26,12 +27,20 @@ struct FeedView: View {
             .scrollTargetLayout()
         }
         .scrollTargetBehavior(.paging)
-        .scrollPosition(id: $activePostId)   
+        .scrollPosition(id: $activePostId)
         .ignoresSafeArea()
+        .onChange(of: isActive) { _, active in
+            if !active {
+         
+                activePostId = nil
+            } else if activePostId == nil {
+        
+                activePostId = viewModel.posts.first?.id
+            }
+        }
     }
 }
 
-
 #Preview {
-    FeedView()
+    FeedView(isActive: true)
 }
