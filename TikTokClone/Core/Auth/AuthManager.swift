@@ -7,11 +7,20 @@
 
 import SwiftUI
 import Combine
+
 final class AuthManager: ObservableObject {
-    @AppStorage("isLoggedIn") var isLoggedIn = false
+    @AppStorage("isLoggedIn") var isLoggedIn: Bool = false
+    @Published var isLoading = false
 
     func signIn() {
-        isLoggedIn = true
+        guard !isLoading else { return }
+
+        isLoading = true
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            self.isLoading = false
+            self.isLoggedIn = true
+        }
     }
 
     func signOut() {
