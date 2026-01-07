@@ -13,7 +13,6 @@ struct SignUpView: View {
     @State private var email = ""
     @State private var password = ""
     @State private var confirmPassword = ""
-    @State private var isPasswordVisible = false
 
     var body: some View {
         VStack(spacing: 24) {
@@ -22,7 +21,7 @@ struct SignUpView: View {
             Text("Create Account")
                 .font(.largeTitle)
                 .fontWeight(.bold)
-            
+
             VStack(spacing: 16) {
                 TextField("Email", text: $email)
                     .textInputAutocapitalization(.never)
@@ -43,15 +42,11 @@ struct SignUpView: View {
                 )
             }
 
-
-            Button {
-                auth.signIn()
-            } label: {
-                Text("Sign Up")
-                    .frame(maxWidth: .infinity, maxHeight: 50)
-                    .background(.red)
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
+            LoadingButton(
+                title: "Sign Up",
+                isLoading: auth.isLoading
+            ) {
+                auth.signIn() 
             }
 
             Spacer()
@@ -62,8 +57,8 @@ struct SignUpView: View {
     }
 }
 
-
-
 #Preview {
     SignUpView()
+        .environmentObject(AuthManager())
 }
+

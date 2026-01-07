@@ -29,20 +29,19 @@ struct LoginView: View {
                         .padding()
                         .background(Color(.systemGray6))
                         .cornerRadius(8)
+
                     PasswordFieldView(
                         title: "Password",
                         text: $password
                     )
                 }
 
-                Button {
+          
+                LoadingButton(
+                    title: "Log In",
+                    isLoading: auth.isLoading
+                ) {
                     auth.signIn()
-                } label: {
-                    Text("Log In")
-                        .frame(maxWidth: .infinity, maxHeight: 50)
-                        .background(.red)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
                 }
 
                 HStack(spacing: 4) {
@@ -65,10 +64,7 @@ struct LoginView: View {
     }
 }
 
-
-
-
-
 #Preview {
     LoginView()
+        .environmentObject(AuthManager())
 }
