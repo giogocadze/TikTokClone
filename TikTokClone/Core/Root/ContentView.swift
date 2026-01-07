@@ -7,18 +7,20 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct RootView: View {
+    @StateObject private var auth = AuthManager()
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        Group {
+            if auth.isLoggedIn {
+                MainTabVIew()
+            } else {
+                LoginView()
+            }
         }
-        .padding()
+        .environmentObject(auth)
     }
 }
-
 #Preview {
-  MainTabVIew()
+    RootView()
 }

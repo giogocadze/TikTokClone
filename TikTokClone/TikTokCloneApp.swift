@@ -30,12 +30,12 @@ struct TikTokCloneApp: App {
         UINavigationBar.appearance().standardAppearance = navAppearance
         UINavigationBar.appearance().scrollEdgeAppearance = navAppearance
     }
-
+    
     var body: some Scene {
-        WindowGroup {
-            MainTabVIew()
-        }
-    }
+         WindowGroup {
+             RootView()
+         }
+     }
 }
 
 
