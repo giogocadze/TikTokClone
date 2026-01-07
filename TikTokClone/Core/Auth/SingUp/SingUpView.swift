@@ -90,7 +90,7 @@ struct SignUpView: View {
                 title: "Sign Up",
                 isLoading: auth.isLoading
             ) {
-                auth.signIn() // placeholder
+                auth.signUp() 
             }
             .disabled(!isFormValid)
             .opacity(isFormValid ? 1 : 0.6)
