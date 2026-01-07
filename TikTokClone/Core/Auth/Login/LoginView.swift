@@ -12,7 +12,6 @@ struct LoginView: View {
 
     @State private var email = ""
     @State private var password = ""
-    @State private var isPasswordVisible = false
 
     var body: some View {
         NavigationStack {
@@ -30,27 +29,10 @@ struct LoginView: View {
                         .padding()
                         .background(Color(.systemGray6))
                         .cornerRadius(8)
-
-                    HStack {
-                        Group {
-                            if isPasswordVisible {
-                                TextField("Password", text: $password)
-                            } else {
-                                SecureField("Password", text: $password)
-                            }
-                        }
-                        .textInputAutocapitalization(.never)
-
-                        Button {
-                            isPasswordVisible.toggle()
-                        } label: {
-                            Image(systemName: isPasswordVisible ? "eye.slash" : "eye")
-                                .foregroundStyle(.gray)
-                        }
-                    }
-                    .padding()
-                    .background(Color(.systemGray6))
-                    .cornerRadius(8)
+                    PasswordFieldView(
+                        title: "Password",
+                        text: $password
+                    )
                 }
 
                 Button {
@@ -63,7 +45,6 @@ struct LoginView: View {
                         .cornerRadius(8)
                 }
 
-                // 👇 Sign up text
                 HStack(spacing: 4) {
                     Text("Don't have an account?")
                         .foregroundStyle(.gray)
@@ -83,6 +64,7 @@ struct LoginView: View {
         }
     }
 }
+
 
 
 

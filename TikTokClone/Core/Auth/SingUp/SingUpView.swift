@@ -22,7 +22,7 @@ struct SignUpView: View {
             Text("Create Account")
                 .font(.largeTitle)
                 .fontWeight(.bold)
-
+            
             VStack(spacing: 16) {
                 TextField("Email", text: $email)
                     .textInputAutocapitalization(.never)
@@ -32,18 +32,17 @@ struct SignUpView: View {
                     .background(Color(.systemGray6))
                     .cornerRadius(8)
 
-                // Password
-                passwordField(
+                PasswordFieldView(
                     title: "Password",
                     text: $password
                 )
 
-                // Confirm password
-                passwordField(
+                PasswordFieldView(
                     title: "Confirm Password",
                     text: $confirmPassword
                 )
             }
+
 
             Button {
                 auth.signIn()
@@ -60,34 +59,6 @@ struct SignUpView: View {
         .padding()
         .navigationTitle("Sign Up")
         .navigationBarTitleDisplayMode(.inline)
-    }
-
-    // MARK: - Reusable password field
-    private func passwordField(
-        title: String,
-        text: Binding<String>
-    ) -> some View {
-        HStack {
-            Group {
-                if isPasswordVisible {
-                    TextField(title, text: text)
-                } else {
-                    SecureField(title, text: text)
-                }
-            }
-            .textInputAutocapitalization(.never)
-            .textContentType(.newPassword)
-
-            Button {
-                isPasswordVisible.toggle()
-            } label: {
-                Image(systemName: isPasswordVisible ? "eye" : "eye.slash")
-                    .foregroundStyle(.gray)
-            }
-        }
-        .padding()
-        .background(Color(.systemGray6))
-        .cornerRadius(8)
     }
 }
 
