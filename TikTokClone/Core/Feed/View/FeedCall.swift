@@ -1,5 +1,5 @@
 //
-//  FeedCall.swift
+//  FeedCell.swift
 //  TikTokClone
 //
 //  Created by giorgi gotsadze on 1/5/26.
@@ -16,6 +16,10 @@ struct FeedCell: View {
 
     @State private var player: AVPlayer
 
+    @State private var isLiked = false
+    @State private var likeCount = 26
+    @State private var showHeartAnimation = false
+
     init(post: Post, activePostId: Binding<String?>) {
         self.post = post
         self._activePostId = activePostId
@@ -24,14 +28,18 @@ struct FeedCell: View {
 
     var body: some View {
         ZStack {
-            // Video (disable hit testing so it doesn't swallow taps)
+
+            // Video
             CustomVideoPlayer(player: player)
                 .containerRelativeFrame([.horizontal, .vertical])
                 .allowsHitTesting(false)
 
-            // ✅ Tap layer ABOVE video, BELOW overlay buttons
+            // Gesture layer
             Color.clear
                 .contentShape(Rectangle())
+                .onTapGesture(count: 2) {
+                    likePost()
+                }
                 .onTapGesture {
                     togglePlayback()
                 }
@@ -40,6 +48,15 @@ struct FeedCell: View {
                 Image(systemName: "play.fill")
                     .font(.system(size: 60))
                     .foregroundColor(.white)
+            }
+
+            if showHeartAnimation {
+                Image(systemName: "heart.fill")
+                    .font(.system(size: 100))
+                    .foregroundColor(.red)
+                    .scaleEffect(showHeartAnimation ? 1 : 0.5)
+                    .opacity(showHeartAnimation ? 1 : 0)
+                    .animation(.easeOut(duration: 0.3), value: showHeartAnimation)
             }
 
             overlay
@@ -55,14 +72,12 @@ struct FeedCell: View {
             }
         }
         .onAppear {
-            // autoplay first video
             if activePostId == nil {
                 activePostId = post.id
             }
         }
     }
 
-    // MARK: - Overlay UI (UNCHANGED)
     private var overlay: some View {
         VStack {
             Spacer()
@@ -88,30 +103,42 @@ struct FeedCell: View {
 
     private var rightActions: some View {
         VStack(spacing: 28) {
+
             Circle()
                 .frame(width: 48, height: 48)
                 .foregroundColor(.gray)
 
-            actionButton(icon: "heart.fill", count: "26")
-            actionButton(icon: "ellipsis.bubble.fill", count: "27")
+            VStack {
+                Button {
+                    toggleLike()
+                } label: {
+                    Image(systemName: isLiked ? "heart.fill" : "heart")
+                        .resizable()
+                        .frame(width: 28, height: 25)
+                        .foregroundColor(isLiked ? .red : .white)
+                }
+
+                Text("\(likeCount)")
+                    .font(.caption)
+                    .foregroundStyle(.white)
+                    .bold()
+            }
+
+            VStack {
+                Button {} label: {
+                    Image(systemName: "ellipsis.bubble.fill")
+                        .resizable()
+                        .frame(width: 28, height: 25)
+                        .foregroundColor(.white)
+                }
+                Text("27")
+                    .font(.caption)
+                    .foregroundStyle(.white)
+                    .bold()
+            }
 
             iconButton("bookmark.fill")
             iconButton("arrowshape.turn.up.right.fill")
-        }
-    }
-
-    private func actionButton(icon: String, count: String) -> some View {
-        VStack {
-            Button {} label: {
-                Image(systemName: icon)
-                    .resizable()
-                    .frame(width: 28, height: 25)
-                    .foregroundColor(.white)
-            }
-            Text(count)
-                .font(.caption)
-                .foregroundStyle(.white)
-                .bold()
         }
     }
 
@@ -125,7 +152,6 @@ struct FeedCell: View {
     }
 
     private func togglePlayback() {
-        // Optional safety: only allow tap control on the active cell
         guard activePostId == post.id else { return }
 
         if isPlaying {
@@ -135,8 +161,24 @@ struct FeedCell: View {
         }
         isPlaying.toggle()
     }
-}
 
+    private func toggleLike() {
+        isLiked.toggle()
+        likeCount += isLiked ? 1 : -1
+    }
+
+    private func likePost() {
+        guard !isLiked else { return }
+
+        isLiked = true
+        likeCount += 1
+
+        showHeartAnimation = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+            showHeartAnimation = false
+        }
+    }
+}
 
 #Preview {
     FeedCell(
@@ -147,4 +189,6 @@ struct FeedCell: View {
         activePostId: .constant(nil)
     )
 }
+
+
 
