@@ -23,11 +23,20 @@ final class AuthManager: ObservableObject {
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) {
             self.isLoading = false
-            self.isLoggedIn = true
+
+        
+            let didFail = Bool.random()
+
+            if didFail {
+                self.errorMessage = "Invalid email or password"
+                self.isLoggedIn = false
+            } else {
+                self.isLoggedIn = true
+            }
         }
     }
 
- 
+
     func signUp() {
         guard !isLoading else { return }
 
@@ -36,9 +45,18 @@ final class AuthManager: ObservableObject {
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             self.isLoading = false
-            self.isLoggedIn = true
+
+            let didFail = Bool.random()
+
+            if didFail {
+                self.errorMessage = "Email already in use"
+                self.isLoggedIn = false
+            } else {
+                self.isLoggedIn = true
+            }
         }
     }
+
 
     func signOut() {
         isLoggedIn = false
