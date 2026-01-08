@@ -10,7 +10,7 @@ import Combine
 
 final class AuthManager: ObservableObject {
 
-    @Published var isLoggedIn = false
+    @AppStorage("isLoggedIn") var isLoggedIn = false
     @Published var isLoading = false
     @Published var errorMessage: String?
 
