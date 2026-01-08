@@ -19,6 +19,22 @@ final class FeedCellViewModel: ObservableObject {
     @Published var likeCount = 26
     @Published var showHeartAnimation = false
     @Published var heartPosition: CGPoint = .zero
+    
+    @Published var comments: [Comment] = [
+        Comment(username: "alex", text: "🔥🔥🔥"),
+        Comment(username: "maria", text: "This is amazing"),
+        Comment(username: "john", text: "How did you edit this?")
+    ]
+
+    @Published var isCommentsPresented = false
+
+    func addComment(_ text: String) {
+        guard !text.isEmpty else { return }
+        comments.append(
+            Comment(username: "you", text: text)
+        )
+    }
+
 
     init(videoURL: String) {
         self.player = AVPlayer(url: URL(string: videoURL)!)

@@ -11,6 +11,7 @@ struct FeedOverlayView: View {
     let isLiked: Bool
     let likeCount: Int
     let onLikeTap: () -> Void
+    let onCommentTap: () -> Void
 
     var body: some View {
         VStack {
@@ -37,10 +38,12 @@ struct FeedOverlayView: View {
 
     private var rightActions: some View {
         VStack(spacing: 28) {
+
             Circle()
                 .frame(width: 48, height: 48)
                 .foregroundColor(.gray)
 
+        
             VStack {
                 Button(action: onLikeTap) {
                     Image(systemName: isLiked ? "heart.fill" : "heart")
@@ -55,25 +58,30 @@ struct FeedOverlayView: View {
                     .bold()
             }
 
-            icon("ellipsis.bubble.fill", "27")
+        
+            VStack {
+                Button(action: onCommentTap) {
+                    Image(systemName: "ellipsis.bubble.fill")
+                        .resizable()
+                        .frame(width: 28, height: 25)
+                        .foregroundColor(.white)
+                }
+
+                Text("27")
+                    .font(.caption)
+                    .foregroundStyle(.white)
+                    .bold()
+            }
+
             icon("bookmark.fill")
             icon("arrowshape.turn.up.right.fill")
         }
     }
 
-    private func icon(_ name: String, _ count: String? = nil) -> some View {
-        VStack {
-            Image(systemName: name)
-                .resizable()
-                .frame(width: 28, height: 25)
-                .foregroundColor(.white)
-
-            if let count {
-                Text(count)
-                    .font(.caption)
-                    .foregroundStyle(.white)
-                    .bold()
-            }
-        }
+    private func icon(_ name: String) -> some View {
+        Image(systemName: name)
+            .resizable()
+            .frame(width: 28, height: 25)
+            .foregroundColor(.white)
     }
 }

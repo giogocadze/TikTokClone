@@ -47,12 +47,20 @@ struct FeedCell: View {
                 position: vm.heartPosition,
                 isVisible: vm.showHeartAnimation
             )
-
+            
+            
             FeedOverlayView(
                 isLiked: vm.isLiked,
                 likeCount: vm.likeCount,
-                onLikeTap: vm.toggleLike
+                onLikeTap: vm.toggleLike,
+                onCommentTap: {
+                    vm.isCommentsPresented = true
+                }
             )
+            .sheet(isPresented: $vm.isCommentsPresented) {
+                CommentsView(vm: vm)
+            }
+
         }
         .onChange(of: activePostId) { _, newValue in
             newValue == post.id ? vm.play() : vm.pause()
