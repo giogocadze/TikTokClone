@@ -13,18 +13,16 @@ struct SignUpView: View {
     @State private var email = ""
     @State private var password = ""
     @State private var confirmPassword = ""
-    
-    
+
+    // MARK: - Email validation
     private var isEmailValid: Bool {
         let emailRegex = #"^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"#
         return NSPredicate(format: "SELF MATCHES %@", emailRegex)
             .evaluate(with: email)
     }
 
-
     private var passwordsMatch: Bool {
-        !password.isEmpty &&
-        password == confirmPassword
+        !password.isEmpty && password == confirmPassword
     }
 
     private var isFormValid: Bool {
@@ -42,6 +40,7 @@ struct SignUpView: View {
                 .fontWeight(.bold)
 
             VStack(spacing: 16) {
+              
                 TextField("Email", text: $email)
                     .textInputAutocapitalization(.never)
                     .keyboardType(.emailAddress)
@@ -49,6 +48,9 @@ struct SignUpView: View {
                     .padding()
                     .background(Color(.systemGray6))
                     .cornerRadius(8)
+                    .onChange(of: email) {
+                        auth.errorMessage = nil
+                    }
 
                 if !email.isEmpty && !isEmailValid {
                     Text("Please enter a valid email address")
@@ -57,19 +59,24 @@ struct SignUpView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
 
-                
-                
+        
                 PasswordFieldView(
                     title: "Password",
                     text: $password
                 )
+                .onChange(of: password) {
+                    auth.errorMessage = nil
+                }
 
+        
                 PasswordFieldView(
                     title: "Confirm Password",
                     text: $confirmPassword
                 )
+                .onChange(of: confirmPassword) {
+                    auth.errorMessage = nil
+                }
 
-        
                 if !passwordsMatch && !confirmPassword.isEmpty {
                     Text("Passwords do not match")
                         .font(.caption)
@@ -83,17 +90,38 @@ struct SignUpView: View {
                         .foregroundColor(.red)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
+
+                if let error = auth.errorMessage {
+                    Text(error)
+                        .font(.caption)
+                        .foregroundColor(.red)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
             }
 
-        
             LoadingButton(
                 title: "Sign Up",
                 isLoading: auth.isLoading
             ) {
-                auth.signUp() 
+                auth.signUp()
             }
             .disabled(!isFormValid)
             .opacity(isFormValid ? 1 : 0.6)
+            
+             HStack(spacing: 4) {
+                    Text("Already have an account?")
+                        .foregroundStyle(.gray)
+
+                    NavigationLink {
+                        LoginView()
+                    } label: {
+                        Text("Log in")
+                            .fontWeight(.semibold)
+                    }
+                }
+                .font(.subheadline)
+            
+            .font(.subheadline)
 
             Spacer()
         }
@@ -103,10 +131,10 @@ struct SignUpView: View {
     }
 }
 
-
 #Preview {
     SignUpView()
         .environmentObject(AuthManager())
 }
+
 
 
