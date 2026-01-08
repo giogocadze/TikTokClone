@@ -19,6 +19,8 @@ struct FeedCell: View {
     @State private var isLiked = false
     @State private var likeCount = 26
     @State private var showHeartAnimation = false
+    @State private var heartPosition: CGPoint = .zero
+
 
     init(post: Post, activePostId: Binding<String?>) {
         self.post = post
@@ -37,9 +39,13 @@ struct FeedCell: View {
             // Gesture layer
             Color.clear
                 .contentShape(Rectangle())
-                .onTapGesture(count: 2) {
-                    likePost()
-                }
+                .simultaneousGesture(
+                    SpatialTapGesture(count: 2)
+                        .onEnded { value in
+                            heartPosition = value.location
+                            likePost()
+                        }
+                )
                 .onTapGesture {
                     togglePlayback()
                 }
@@ -54,11 +60,12 @@ struct FeedCell: View {
                 Image(systemName: "heart.fill")
                     .font(.system(size: 100))
                     .foregroundColor(.red)
+                    .position(heartPosition)
                     .scaleEffect(showHeartAnimation ? 1 : 0.5)
                     .opacity(showHeartAnimation ? 1 : 0)
                     .animation(.easeOut(duration: 0.3), value: showHeartAnimation)
             }
-
+            
             overlay
         }
         .onChange(of: activePostId) { _, newValue in
