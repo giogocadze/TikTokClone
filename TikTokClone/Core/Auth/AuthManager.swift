@@ -46,7 +46,7 @@ final class AuthManager: ObservableObject {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             self.isLoading = false
 
-            let didFail = Bool.random()
+            let didFail = self.errorMessage == nil && self.isLoggedIn == false
 
             if didFail {
                 self.errorMessage = "Email already in use"
