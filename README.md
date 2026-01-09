@@ -11,22 +11,18 @@ A TikTok-inspired iOS application built with **SwiftUI**, focusing on modern app
 - Sign Up screen
 - Sign Out with confirmation
 - App-wide auth state handling
-- Backend-ready architecture
 
 ### 📱 Feed
 - Fullscreen vertical video feed
 - TikTok-style paging
 - Auto-play / pause based on active item
 - Tap to play / pause
-- AVPlayer integration
 
 ### 👤 Profile
 - User profile header
 - Followers / Following / Likes stats
 - Post grid
-- Sign Out from navigation bar
-
-
+- 
 ### 🧠 State Management
 - `ObservableObject`
 - `@EnvironmentObject`
