@@ -14,8 +14,9 @@ final class AuthManager: ObservableObject {
     @Published var isLoading = false
     @Published var errorMessage: String?
 
+    @Published var userEmail: String?
 
-    func signIn() {
+    func signIn(email : String) {
         guard !isLoading else { return }
 
         errorMessage = nil
@@ -31,6 +32,7 @@ final class AuthManager: ObservableObject {
                 self.errorMessage = "Invalid email or password"
                 self.isLoggedIn = false
             } else {
+                self.userEmail = email
                 self.isLoggedIn = true
             }
         }
@@ -60,6 +62,7 @@ final class AuthManager: ObservableObject {
 
     func signOut() {
         isLoggedIn = false
+        userEmail = nil
     }
 }
 

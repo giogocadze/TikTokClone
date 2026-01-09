@@ -64,7 +64,7 @@ struct LoginView: View {
                     title: "Log In",
                     isLoading: auth.isLoading
                 ) {
-                    auth.signIn()
+                    auth.signIn(email: email)
                 }
                 .disabled(!isFormValid)
                 .opacity(isFormValid ? 1 : 0.6)
