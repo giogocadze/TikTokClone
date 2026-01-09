@@ -9,6 +9,8 @@ import SwiftUI
 
 struct CommentsView: View {
     @ObservedObject var vm: FeedCellViewModel
+    @EnvironmentObject var auth: AuthManager
+
     @State private var commentText = ""
 
     var body: some View {
@@ -52,7 +54,8 @@ struct CommentsView: View {
                     .textFieldStyle(.roundedBorder)
 
                 Button("Post") {
-                    vm.addComment(commentText)
+                    let username = auth.userEmail ?? "anonymous"
+                    vm.addComment(text: commentText, username: username)
                     commentText = ""
                 }
                 .disabled(commentText.isEmpty)

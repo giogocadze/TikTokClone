@@ -28,12 +28,14 @@ final class FeedCellViewModel: ObservableObject {
 
     @Published var isCommentsPresented = false
 
-    func addComment(_ text: String) {
+    func addComment(text: String, username: String) {
         guard !text.isEmpty else { return }
+
         comments.append(
-            Comment(username: "you", text: text)
+            Comment(username: username, text: text)
         )
     }
+
 
     var commentCount: Int {
         comments.count

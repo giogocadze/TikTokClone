@@ -9,19 +9,38 @@ import SwiftUI
 
 struct ProfileHeaderView: View {
     @EnvironmentObject var auth: AuthManager
+    @State private var showEditProfile = false
 
     var body: some View {
         VStack(spacing: 16) {
 
             VStack(spacing: 8) {
-                Image(systemName: "person.circle.fill")
-                    .resizable()
-                    .frame(width: 80, height: 80)
-                    .foregroundStyle(Color(.systemGray5))
 
-                Text(displayName)
+                Group {
+                    if let data = auth.profileImageData,
+                       let image = UIImage(data: data) {
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFill()
+                    } else {
+                        Image(systemName: "person.circle.fill")
+                            .resizable()
+                            .foregroundStyle(Color(.systemGray5))
+                    }
+                }
+                .frame(width: 80, height: 80)
+                .clipShape(Circle())
+
+                Text(auth.username ?? displayName)
                     .font(.subheadline)
                     .fontWeight(.semibold)
+
+
+                if let bio = auth.bio {
+                    Text(bio)
+                        .font(.caption)
+                        .foregroundColor(.gray)
+                }
             }
 
             HStack(spacing: 16) {
@@ -31,7 +50,7 @@ struct ProfileHeaderView: View {
             }
 
             Button {
-                // edit profile
+                showEditProfile = true
             } label: {
                 Text("Edit Profile")
                     .font(.subheadline)
@@ -41,17 +60,22 @@ struct ProfileHeaderView: View {
                     .background(Color(.systemGray5))
                     .clipShape(RoundedRectangle(cornerRadius: 6))
             }
+            .sheet(isPresented: $showEditProfile) {
+                EditProfileView()
+                    .environmentObject(auth)
+            }
 
             Divider()
         }
     }
 
-    // MARK: - Derived username
     private var displayName: String {
         guard let email = auth.userEmail else { return "User" }
         return email.components(separatedBy: "@").first ?? email
     }
 }
+
+
 
 
 

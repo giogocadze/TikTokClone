@@ -21,6 +21,6 @@ struct RootView: View {
         .environmentObject(auth)
     }
 }
-#Preview {
+#Preview { 
     RootView()
 }
