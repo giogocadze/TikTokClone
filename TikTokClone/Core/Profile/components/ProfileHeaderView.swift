@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ProfileHeaderView: View {
+    @EnvironmentObject var auth: AuthManager
+
     var body: some View {
         VStack(spacing: 16) {
 
@@ -17,7 +19,7 @@ struct ProfileHeaderView: View {
                     .frame(width: 80, height: 80)
                     .foregroundStyle(Color(.systemGray5))
 
-                Text("Giorgi Gotsadze")
+                Text(displayName)
                     .font(.subheadline)
                     .fontWeight(.semibold)
             }
@@ -43,13 +45,20 @@ struct ProfileHeaderView: View {
             Divider()
         }
     }
+
+    // MARK: - Derived username
+    private var displayName: String {
+        guard let email = auth.userEmail else { return "User" }
+        return email.components(separatedBy: "@").first ?? email
+    }
 }
 
 
 
-
-
-
 #Preview {
-    ProfileHeaderView()
+    let auth = AuthManager()
+    auth.userEmail = "giorgi@gmail.com"
+
+    return ProfileHeaderView()
+        .environmentObject(auth)
 }

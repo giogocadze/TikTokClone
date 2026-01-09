@@ -103,7 +103,7 @@ struct SignUpView: View {
                 title: "Sign Up",
                 isLoading: auth.isLoading
             ) {
-                auth.signUp()
+                auth.signUp(email: email)
             }
             .disabled(!isFormValid)
             .opacity(isFormValid ? 1 : 0.6)

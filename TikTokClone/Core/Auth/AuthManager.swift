@@ -11,12 +11,32 @@ import Combine
 final class AuthManager: ObservableObject {
 
     @AppStorage("isLoggedIn") var isLoggedIn = false
+    @AppStorage("userEmail") var userEmail: String?
+
     @Published var isLoading = false
     @Published var errorMessage: String?
 
-    @Published var userEmail: String?
+    private var registeredEmails: Set<String> = []
 
-    func signIn(email : String) {
+    func signIn(email: String) {
+        guard !isLoading else { return }
+
+        errorMessage = nil
+        isLoading = true
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            self.isLoading = false
+
+            if self.registeredEmails.contains(email) {
+                self.userEmail = email
+                self.isLoggedIn = true
+            } else {
+                self.errorMessage = "Invalid email or password"
+            }
+        }
+    }
+
+    func signUp(email: String) {
         guard !isLoading else { return }
 
         errorMessage = nil
@@ -25,44 +45,20 @@ final class AuthManager: ObservableObject {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) {
             self.isLoading = false
 
-        
-            let didFail = Bool.random()
-
-            if didFail {
-                self.errorMessage = "Invalid email or password"
-                self.isLoggedIn = false
+            if self.registeredEmails.contains(email) {
+                self.errorMessage = "Email already in use"
             } else {
+                self.registeredEmails.insert(email)
                 self.userEmail = email
                 self.isLoggedIn = true
             }
         }
     }
 
-
-    func signUp() {
-        guard !isLoading else { return }
-
-        errorMessage = nil
-        isLoading = true
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            self.isLoading = false
-
-            let didFail = self.errorMessage == nil && self.isLoggedIn == false
-
-            if didFail {
-                self.errorMessage = "Email already in use"
-                self.isLoggedIn = false
-            } else {
-                self.isLoggedIn = true
-            }
-        }
-    }
-
-
     func signOut() {
         isLoggedIn = false
         userEmail = nil
     }
 }
+
 
