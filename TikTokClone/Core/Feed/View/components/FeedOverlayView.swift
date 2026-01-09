@@ -10,6 +10,7 @@ import SwiftUI
 struct FeedOverlayView: View {
     let isLiked: Bool
     let likeCount: Int
+    let commentCount: Int 
     let onLikeTap: () -> Void
     let onCommentTap: () -> Void
 
@@ -67,7 +68,7 @@ struct FeedOverlayView: View {
                         .foregroundColor(.white)
                 }
 
-                Text("27")
+                Text("\(commentCount)")
                     .font(.caption)
                     .foregroundStyle(.white)
                     .bold()

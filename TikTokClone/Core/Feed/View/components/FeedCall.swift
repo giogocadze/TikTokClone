@@ -52,6 +52,7 @@ struct FeedCell: View {
             FeedOverlayView(
                 isLiked: vm.isLiked,
                 likeCount: vm.likeCount,
+                commentCount: vm.commentCount,
                 onLikeTap: vm.toggleLike,
                 onCommentTap: {
                     vm.isCommentsPresented = true

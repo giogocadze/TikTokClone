@@ -35,6 +35,9 @@ final class FeedCellViewModel: ObservableObject {
         )
     }
 
+    var commentCount: Int {
+        comments.count
+    }
 
     init(videoURL: String) {
         self.player = AVPlayer(url: URL(string: videoURL)!)
