@@ -12,13 +12,19 @@ struct FeedCell: View {
     let post: Post
     @Binding var activePostId: String?
 
+    @EnvironmentObject private var auth: AuthManager
     @StateObject private var vm: FeedCellViewModel
 
     init(post: Post, activePostId: Binding<String?>) {
         self.post = post
         self._activePostId = activePostId
+
+        // temporary placeholder, replaced onAppear
         _vm = StateObject(
-            wrappedValue: FeedCellViewModel(videoURL: post.videoUrl)
+            wrappedValue: FeedCellViewModel(
+                videoURL: post.videoUrl,
+                username: "user"
+            )
         )
     }
 
@@ -47,8 +53,7 @@ struct FeedCell: View {
                 position: vm.heartPosition,
                 isVisible: vm.showHeartAnimation
             )
-            
-            
+
             FeedOverlayView(
                 isLiked: vm.isLiked,
                 likeCount: vm.likeCount,
@@ -60,19 +65,25 @@ struct FeedCell: View {
             )
             .sheet(isPresented: $vm.isCommentsPresented) {
                 CommentsView(vm: vm)
+                    .environmentObject(auth)
             }
-
         }
         .onChange(of: activePostId) { _, newValue in
             newValue == post.id ? vm.play() : vm.pause()
         }
         .onAppear {
+            // 🔑 Inject real username once
+            if let username = auth.username {
+                vm.updateUsername(username)
+            }
+
             if activePostId == nil {
                 activePostId = post.id
             }
         }
     }
 }
+
 #Preview {
     FeedCell(
         post: Post(

@@ -10,16 +10,21 @@ import AVKit
 import Combine
 final class FeedCellViewModel: ObservableObject {
 
-    // Playback
+
+    private var currentUsername: String = "user"
+
+
+
+
     @Published var isPlaying = true
     let player: AVPlayer
 
-    // Likes
+   
     @Published var isLiked = false
     @Published var likeCount = 26
     @Published var showHeartAnimation = false
     @Published var heartPosition: CGPoint = .zero
-    
+
     @Published var comments: [Comment] = [
         Comment(username: "alex", text: "🔥🔥🔥"),
         Comment(username: "maria", text: "This is amazing"),
@@ -28,22 +33,23 @@ final class FeedCellViewModel: ObservableObject {
 
     @Published var isCommentsPresented = false
 
-    func addComment(text: String, username: String) {
-        guard !text.isEmpty else { return }
-
-        comments.append(
-            Comment(username: username, text: text)
-        )
-    }
-
-
     var commentCount: Int {
         comments.count
     }
 
-    init(videoURL: String) {
+
+    init(videoURL: String, username: String) {
         self.player = AVPlayer(url: URL(string: videoURL)!)
+        self.currentUsername = username
     }
+    func addComment(_ text: String) {
+        guard !text.isEmpty else { return }
+
+        comments.append(
+            Comment(username: currentUsername, text: text)
+        )
+    }
+
 
     func play() {
         player.play()
@@ -55,10 +61,15 @@ final class FeedCellViewModel: ObservableObject {
         isPlaying = false
     }
 
+    func updateUsername(_ username: String) {
+        self.currentUsername = username
+    }
+
     func togglePlayback(isActive: Bool) {
         guard isActive else { return }
         isPlaying ? pause() : play()
     }
+
 
     func toggleLike() {
         isLiked.toggle()
@@ -78,3 +89,4 @@ final class FeedCellViewModel: ObservableObject {
         }
     }
 }
+

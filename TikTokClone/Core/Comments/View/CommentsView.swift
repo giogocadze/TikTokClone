@@ -54,8 +54,7 @@ struct CommentsView: View {
                     .textFieldStyle(.roundedBorder)
 
                 Button("Post") {
-                    let username = auth.userEmail ?? "anonymous"
-                    vm.addComment(text: commentText, username: username)
+                    vm.addComment(commentText)
                     commentText = ""
                 }
                 .disabled(commentText.isEmpty)
@@ -65,3 +64,4 @@ struct CommentsView: View {
         .presentationDetents([.medium, .large])
     }
 }
+
