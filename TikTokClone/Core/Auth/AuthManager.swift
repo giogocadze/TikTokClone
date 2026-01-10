@@ -37,6 +37,19 @@ final class AuthManager: ObservableObject {
             followingCount = newValue.count
         }
     }
+    @AppStorage("followerUserIds")
+    private var followerUserIdsData: Data = Data()
+
+    var followerUserIds: Set<String> {
+        get {
+            (try? JSONDecoder().decode(Set<String>.self, from: followerUserIdsData)) ?? []
+        }
+        set {
+            followerUserIdsData = (try? JSONEncoder().encode(newValue)) ?? Data()
+            followersCount = newValue.count
+        }
+    }
+
     
     func follow(userId: String) {
         var set = followedUserIds
@@ -100,6 +113,17 @@ final class AuthManager: ObservableObject {
         }
     }
     
+    func gainFollower(userId : String) {
+        var set  = followerUserIds
+        set.insert(userId)
+        followerUserIds = set
+    }
+    
+    func loseFollower(userId: String) {
+        var set = followerUserIds
+        set.remove(userId)
+        followerUserIds = set
+    }
 
     func signOut() {
         isLoggedIn = false
@@ -110,6 +134,7 @@ final class AuthManager: ObservableObject {
         followingCount = 0
         followersCount = 0
         likesCount = 0
+        followedUserIds = []
         followedUserIds = []
 
     }

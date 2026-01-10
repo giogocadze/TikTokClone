@@ -34,8 +34,13 @@ final class ExploreViewModel: ObservableObject {
 
         if users[index].isFollowing {
             auth.follow(userId: userId)
+
+            auth.gainFollower(userId: userId)
         } else {
             auth.unfollow(userId: userId)
+
+     
+            auth.loseFollower(userId: userId)
         }
     }
 
