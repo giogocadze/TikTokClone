@@ -30,7 +30,12 @@ final class ExploreViewModel: ObservableObject {
 
         users[index].isFollowing.toggle()
 
-        auth.followingCount += users[index].isFollowing ? 1 : -1
+        if users[index].isFollowing {
+            auth.followingCount += 1
+        } else {
+            auth.followingCount = max(0, auth.followingCount - 1)
+        }
+
     }
 }
 
