@@ -20,6 +20,10 @@ final class AuthManager: ObservableObject {
 
     @Published var isLoading = false
     @Published var errorMessage: String?
+    
+    @AppStorage("followingCount") var followingCount: Int = 0
+    @AppStorage("followersCount") var followersCount: Int = 0
+    @AppStorage("likesCount") var likesCount: Int = 0
 
     private var registeredEmails: Set<String> = []
 
@@ -33,6 +37,9 @@ final class AuthManager: ObservableObject {
             self.isLoading = false
 
             if self.registeredEmails.contains(email) {
+                self.followingCount = 0
+                self.followersCount = 0
+                self.likesCount = 0
                 self.userEmail = email
                 self.username = email.components(separatedBy: "@").first
                 self.bio = "No bio yet"
@@ -56,6 +63,9 @@ final class AuthManager: ObservableObject {
                 self.errorMessage = "Email already in use"
             } else {
                 self.registeredEmails.insert(email)
+                self.followingCount = 0
+                self.followersCount = 0
+                self.likesCount = 0
                 self.userEmail = email
                 self.username = email.components(separatedBy: "@").first
                 self.bio = "Welcome to TikTokClone 👋"
@@ -70,7 +80,11 @@ final class AuthManager: ObservableObject {
         username = nil
         bio = nil
         profileImageData = nil
+        followingCount = 0
+        followersCount = 0
+        likesCount = 0
     }
+
 }
 
 

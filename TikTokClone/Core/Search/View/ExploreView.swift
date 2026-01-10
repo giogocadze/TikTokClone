@@ -7,9 +7,16 @@
 
 
 import SwiftUI
+import Combine
 
 struct ExploreView: View {
-    @StateObject private var vm = ExploreViewModel()
+    @StateObject private var vm: ExploreViewModel
+
+    init(auth: AuthManager) {
+        _vm = StateObject(
+            wrappedValue: ExploreViewModel(auth: auth)
+        )
+    }
 
     var body: some View {
         NavigationStack {
@@ -33,6 +40,12 @@ struct ExploreView: View {
 }
 
 
+
+
+
 #Preview {
-    ExploreView()
+    let auth = AuthManager()
+
+    ExploreView(auth: auth)
+        .environmentObject(auth)
 }

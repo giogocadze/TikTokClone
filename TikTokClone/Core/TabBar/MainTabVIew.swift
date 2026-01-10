@@ -10,6 +10,8 @@ import SwiftUI
 import SwiftUI
 
 struct MainTabVIew: View {
+    
+    @EnvironmentObject private var auth: AuthManager
     @State private var selectedTab = 0
 
     var body: some View {
@@ -30,7 +32,7 @@ struct MainTabVIew: View {
                 .tag(0)
 
             // FRIENDS
-            ExploreView()
+            ExploreView(auth : auth)
                 .tabItem {
                     VStack {
                         Image(systemName: "person.2")

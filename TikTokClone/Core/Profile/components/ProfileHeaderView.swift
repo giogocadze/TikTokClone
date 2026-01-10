@@ -44,9 +44,9 @@ struct ProfileHeaderView: View {
             }
 
             HStack(spacing: 16) {
-                UserStatView(value: 5, title: "Following")
-                UserStatView(value: 1, title: "Followers")
-                UserStatView(value: 10, title: "Likes")
+                UserStatView(value: auth.followingCount, title: "Following")
+                UserStatView(value: auth.followersCount, title: "Followers")
+                UserStatView(value: auth.likesCount, title: "Likes")
             }
 
             Button {
