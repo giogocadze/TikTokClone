@@ -44,10 +44,30 @@ struct ProfileHeaderView: View {
             }
 
             HStack(spacing: 16) {
-                UserStatView(value: auth.followingCount, title: "Following")
-                UserStatView(value: auth.followersCount, title: "Followers")
+
+                Button {
+                    showFollowing = true
+                } label: {
+                    UserStatView(value: auth.followingCount, title: "Following")
+                }
+
+                Button {
+                    showFollowers = true
+                } label: {
+                    UserStatView(value: auth.followersCount, title: "Followers")
+                }
+
                 UserStatView(value: auth.likesCount, title: "Likes")
             }
+            .sheet(isPresented: $showFollowers) {
+                FollowersListView()
+                    .environmentObject(auth)
+            }
+            .sheet(isPresented: $showFollowing) {
+                FollowingListView()
+                    .environmentObject(auth)
+            }
+
 
             Button {
                 showEditProfile = true
