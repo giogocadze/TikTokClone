@@ -17,11 +17,13 @@ final class ExploreViewModel: ObservableObject {
     }
 
     private func fetchUsers() {
+        let followed = auth.followedUserIds
+
         users = [
-            User(id: UUID().uuidString, username: "alex", fullName: "Alex Johnson", isFollowing: false),
-            User(id: UUID().uuidString, username: "maria", fullName: "Maria Gomez", isFollowing: true),
-            User(id: UUID().uuidString, username: "john", fullName: "John Smith", isFollowing: false),
-            User(id: UUID().uuidString, username: "lisa", fullName: "Lisa Brown", isFollowing: false),
+            User(id: UUID().uuidString, username: "alex", fullName: "Alex Johnson", isFollowing: followed.contains("alex")),
+            User(id: UUID().uuidString, username: "maria", fullName: "Maria Gomez", isFollowing: followed.contains("maria")),
+            User(id: UUID().uuidString, username: "john", fullName: "John Smith", isFollowing: followed.contains("john")),
+            User(id: UUID().uuidString, username: "lisa", fullName: "Lisa Brown", isFollowing: followed.contains("lisa")),
         ]
     }
 
@@ -31,12 +33,12 @@ final class ExploreViewModel: ObservableObject {
         users[index].isFollowing.toggle()
 
         if users[index].isFollowing {
-            auth.followingCount += 1
+            auth.follow(userId: userId)
         } else {
-            auth.followingCount = max(0, auth.followingCount - 1)
+            auth.unfollow(userId: userId)
         }
-
     }
+
 }
 
 
