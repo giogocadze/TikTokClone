@@ -19,13 +19,39 @@ final class ExploreViewModel: ObservableObject {
     private func fetchUsers() {
         let followed = auth.followedUserIds
 
+        let alexId = "alex"
+        let mariaId = "maria"
+        let johnId = "john"
+        let lisaId = "lisa"
+
         users = [
-            User(id: UUID().uuidString, username: "alex", fullName: "Alex Johnson", isFollowing: followed.contains("alex")),
-            User(id: UUID().uuidString, username: "maria", fullName: "Maria Gomez", isFollowing: followed.contains("maria")),
-            User(id: UUID().uuidString, username: "john", fullName: "John Smith", isFollowing: followed.contains("john")),
-            User(id: UUID().uuidString, username: "lisa", fullName: "Lisa Brown", isFollowing: followed.contains("lisa")),
+            User(
+                id: alexId,
+                username: "alex",
+                fullName: "Alex Johnson",
+                isFollowing: followed.contains(alexId)
+            ),
+            User(
+                id: mariaId,
+                username: "maria",
+                fullName: "Maria Gomez",
+                isFollowing: followed.contains(mariaId)
+            ),
+            User(
+                id: johnId,
+                username: "john",
+                fullName: "John Smith",
+                isFollowing: followed.contains(johnId)
+            ),
+            User(
+                id: lisaId,
+                username: "lisa",
+                fullName: "Lisa Brown",
+                isFollowing: followed.contains(lisaId)
+            )
         ]
     }
+
 
     func toggleFollow(for userId: String) {
         guard let index = users.firstIndex(where: { $0.id == userId }) else { return }
@@ -34,14 +60,10 @@ final class ExploreViewModel: ObservableObject {
 
         if users[index].isFollowing {
             auth.follow(userId: userId)
-
-            auth.gainFollower(userId: userId)
         } else {
             auth.unfollow(userId: userId)
-
-     
-            auth.loseFollower(userId: userId)
         }
+
     }
 
 }

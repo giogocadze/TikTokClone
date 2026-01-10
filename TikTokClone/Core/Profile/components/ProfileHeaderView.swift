@@ -10,6 +10,9 @@ import SwiftUI
 struct ProfileHeaderView: View {
     @EnvironmentObject var auth: AuthManager
     @State private var showEditProfile = false
+    @State private var showFollowers = false
+    @State private var showFollowing = false
+
 
     var body: some View {
         VStack(spacing: 16) {
