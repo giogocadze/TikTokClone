@@ -6,7 +6,7 @@ A TikTok-inspired iOS application built with **SwiftUI**, focusing on modern app
 
 ## ✨ Features
 
-### 🔐 Authentication (Mocked)
+### 🔐 Authentication 
 - Login screen
 - Sign Up screen
 - Sign Out with confirmation
@@ -23,11 +23,6 @@ A TikTok-inspired iOS application built with **SwiftUI**, focusing on modern app
 - Followers / Following / Likes stats
 - Post grid
 - 
-### 🧠 State Management
-- `ObservableObject`
-- `@EnvironmentObject`
-- Single source of truth for auth
-- No navigation hacks
 
 ---
 
@@ -36,7 +31,7 @@ A TikTok-inspired iOS application built with **SwiftUI**, focusing on modern app
 - **SwiftUI**
 - **Combine**
 - **AVKit**
-- **UIKit** (NavigationBar appearance customization)
+- **UIKit** 
 - **iOS 17+ / iOS 26-ready**
 
 ---
