@@ -22,7 +22,6 @@ A TikTok-inspired iOS application built with **SwiftUI**, focusing on modern app
 - User profile header
 - Followers / Following / Likes stats
 - Post grid
-- 
 
 ---
 
@@ -62,17 +61,6 @@ A TikTok-inspired iOS application built with **SwiftUI**, focusing on modern app
 
 ---
 
-## 🗺 Roadmap
-
-Planned improvements:
-- Persist login state (`@AppStorage`)
-- Backend authentication
-- Upload flow
-- Likes & comments
-- Profile data from backend
-- Video caching & performance optimization
-
----
 
 ## 📌 Notes
 
@@ -84,16 +72,3 @@ This project is built with:
 It is intended for **portfolio and educational use**.
 
 ---
-
-## 👨‍💻 Author
-
-**Giorgi Gotsadze**
-
-iOS Developer  
-Swift • SwiftUI • Clean Architecture
-
----
-
-## 📄 License
-
-This project is for educational and portfolio purposes.
